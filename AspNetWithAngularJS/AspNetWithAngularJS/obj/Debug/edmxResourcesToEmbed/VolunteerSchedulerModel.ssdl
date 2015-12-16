@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VolunteerSchedulerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Schedule">
+    <Key>
+      <PropertyRef Name="monthAssigned" />
+    </Key>
+    <Property Name="monthAssigned" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TaskAssignment">
+    <Key>
+      <PropertyRef Name="volunteerID" />
+      <PropertyRef Name="monthAssigned" />
+    </Key>
+    <Property Name="volunteerID" Type="int" Nullable="false" />
+    <Property Name="monthAssigned" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Volunteer">
+    <Key>
+      <PropertyRef Name="volunteerID" />
+    </Key>
+    <Property Name="volunteerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstName" Type="varchar" MaxLength="25" />
+    <Property Name="lastName" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <Association Name="FK__TaskAssig__month__15502E78">
+    <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+    <End Role="TaskAssignment" Type="Self.TaskAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedule">
+        <PropertyRef Name="monthAssigned" />
+      </Principal>
+      <Dependent Role="TaskAssignment">
+        <PropertyRef Name="monthAssigned" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TaskAssig__volun__145C0A3F">
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="1" />
+    <End Role="TaskAssignment" Type="Self.TaskAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Volunteer">
+        <PropertyRef Name="volunteerID" />
+      </Principal>
+      <Dependent Role="TaskAssignment">
+        <PropertyRef Name="volunteerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VolunteerSchedulerModelStoreContainer">
+    <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaskAssignment" EntityType="Self.TaskAssignment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TaskAssig__month__15502E78" Association="Self.FK__TaskAssig__month__15502E78">
+      <End Role="Schedule" EntitySet="Schedule" />
+      <End Role="TaskAssignment" EntitySet="TaskAssignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TaskAssig__volun__145C0A3F" Association="Self.FK__TaskAssig__volun__145C0A3F">
+      <End Role="Volunteer" EntitySet="Volunteer" />
+      <End Role="TaskAssignment" EntitySet="TaskAssignment" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

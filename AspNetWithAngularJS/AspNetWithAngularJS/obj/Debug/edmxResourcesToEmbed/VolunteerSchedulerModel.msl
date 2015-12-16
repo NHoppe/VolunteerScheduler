@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VolunteerSchedulerModelStoreContainer" CdmEntityContainer="VolunteerSchedulerEntities">
+    <EntitySetMapping Name="Schedules">
+      <EntityTypeMapping TypeName="VolunteerSchedulerModel.Schedule">
+        <MappingFragment StoreEntitySet="Schedule">
+          <ScalarProperty Name="monthAssigned" ColumnName="monthAssigned" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Volunteers">
+      <EntityTypeMapping TypeName="VolunteerSchedulerModel.Volunteer">
+        <MappingFragment StoreEntitySet="Volunteer">
+          <ScalarProperty Name="volunteerID" ColumnName="volunteerID" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TaskAssignment" TypeName="VolunteerSchedulerModel.TaskAssignment" StoreEntitySet="TaskAssignment">
+      <EndProperty Name="Schedule">
+        <ScalarProperty Name="monthAssigned" ColumnName="monthAssigned" />
+      </EndProperty>
+      <EndProperty Name="Volunteer">
+        <ScalarProperty Name="volunteerID" ColumnName="volunteerID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

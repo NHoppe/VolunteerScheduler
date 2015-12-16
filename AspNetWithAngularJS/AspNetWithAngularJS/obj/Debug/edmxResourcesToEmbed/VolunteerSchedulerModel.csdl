@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VolunteerSchedulerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Schedule">
+    <Key>
+      <PropertyRef Name="monthAssigned" />
+    </Key>
+    <Property Name="monthAssigned" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Volunteers" Relationship="Self.TaskAssignment" FromRole="Schedule" ToRole="Volunteer" />
+  </EntityType>
+  <EntityType Name="Volunteer">
+    <Key>
+      <PropertyRef Name="volunteerID" />
+    </Key>
+    <Property Name="volunteerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Schedules" Relationship="Self.TaskAssignment" FromRole="Volunteer" ToRole="Schedule" />
+  </EntityType>
+  <Association Name="TaskAssignment">
+    <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="VolunteerSchedulerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+    <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
+    <AssociationSet Name="TaskAssignment" Association="Self.TaskAssignment">
+      <End Role="Schedule" EntitySet="Schedules" />
+      <End Role="Volunteer" EntitySet="Volunteers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
